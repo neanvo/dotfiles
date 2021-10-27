@@ -1,0 +1,20 @@
+{
+  "tsserver.enable": true,
+  "typescript.suggest.autoImports": true,
+  "typescript.suggestionActions.enabled": true,
+  "eslint.autoFixOnSave": true,
+  "typescript.validate.enable": true,
+  "tsserver.enableJavascript": true,
+  "git.realtimeGutters": true,
+  "typescript.referencesCodeLens.enable": true,
+  "diagnostic.errorSign": "•",
+  "diagnostic.warningSign": "•",
+  "diagnostic.infoSign": "•",
+  "git.addedSign.hlGroup": "GitGutterAdd",
+  "git.changedSign.hlGroup": "GitGutterChange",
+  "git.removedSign.hlGroup": "GitGutterDelete",
+  "git.topRemovedSign.hlGroup": "GitGutterDelete",
+  "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete",
+  "html.format.enable": true,
+  "stylelintplus.autoFixOnSave": true
+}
