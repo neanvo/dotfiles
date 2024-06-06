@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function display_error_and_exit {
-  echo "Error: $1"
+  echo "⚠️ Error: $1"
   exit 1
 }
 

@@ -1,34 +1,56 @@
 #!/bin/bash
 source ./console.sh
 
-
-# 1. Nvim (NvChad)
-
+# 1. Nvim (NvChad) ✨
 if [ -d "$HOME/.config/nvim" ]; then
-    # Remove ./nvim/ directory if exists
     if [ -d "./nvim" ]; then
         rm -rf ./nvim/
     fi
 
-    # Copy contents from ~/.config/nvim/ to ./nvim/
-    cp -r "$HOME/.config/nvim/" ./nvim/ || display_error_and_exit "Failed to copy nvim configuration."
-    echo "Sync completed."
+    cp -r "$HOME/.config/nvim/lua/custom/" ./nvim/ || display_error_and_exit "❌ Failed to copy nvim configuration."
+    echo "✅ Nvim"
 else
-    echo "Error: ~/.config/nvim/ directory not found. Nvim sync reverted."
+    echo "⚠️ Error: ~/.config/nvim/ directory not found. Nvim sync task is reverted."
 fi
 
-
-# 2. Tmux
-
+# 2. Tmux 📜
 if [ -f "$HOME/.tmux.conf" ]; then
-    # Remove ./.tmux.conf if exists 
     if [ -f "./.tmux.conf" ]; then
         rm -rf ./.tmux.conf
     fi
 
-    # Copy content from ~/.tmux.conf to ./.tmux.conf
-    cp "$HOME/.tmux.conf" "./.tmux.conf" || display_error_and_exit "Failed to copy tmux configuration."
-    echo "Tmux sync completed."
+    cp "$HOME/.tmux.conf" "./.tmux.conf" || display_error_and_exit "❌ Failed to copy tmux configuration."
+    echo "✅ Tmux"
 else
-    echo "Warning: ~/.tmux.conf not found. Tmux configuration was not synced."
+    echo "⚠️ Error: ~/.tmux.conf not found. Tmux configuration was not synced."
 fi
+
+# 3. Alacritty 💻
+if [ -d "$HOME/.config/alacritty" ]; then
+    if [ -f "./alacritty.toml" ]; then
+        rm -rf ./alacritty.toml
+    fi
+
+    cp "$HOME/.config/alacritty/alacritty.toml" "./alacritty.toml" || display_error_and_exit "❌ Failed to copy alacritty configuration."
+    echo "✅ Alacritty"
+else
+    echo "⚠️ Error: ~/.config/alacritty not found. Alacritty configuration was not synced."
+fi
+
+# 4. Zsh 🐚
+if [ -d "$HOME/.config/zsh" ]; then
+    if [ -f "./zsh/.zshrc" ]; then
+        rm -rf ./zsh/.zshrc
+    fi
+    if [ -f "./zsh/.aliases" ]; then
+        rm -rf ./zsh/.aliases
+    fi
+
+    cp "$HOME/.config/zsh/.zshrc" "./zsh/.zshrc" || display_error_and_exit "❌ Failed to copy zsh configuration."
+    cp "$HOME/.config/zsh/.aliases" "./zsh/.aliases" || display_error_and_exit "❌ Failed to copy zsh configuration."
+    echo "✅ Zsh"
+else
+    echo "⚠️ Error: ~/.config/zsh not found. Zsh configuration was not synced."
+fi
+
+echo "Sync completed!"
