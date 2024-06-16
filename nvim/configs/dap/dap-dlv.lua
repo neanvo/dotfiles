@@ -39,26 +39,9 @@ end
 dap.configurations.go = {
   {
     type = "go",
-    name = "Debug project internalConsole",
+    name = "Debug project",
     request = "launch",
     program = "${workspaceFolder}/cmd/main.go",
-    console = "internalConsole",
-    justMyCode = false,
-  },
-  {
-    type = "go",
-    name = "Debug project integratedTerminal",
-    request = "launch",
-    program = "${workspaceFolder}/cmd/main.go",
-    console = "integratedTerminal",
-    justMyCode = false,
-  },
-  {
-    type = "go",
-    name = "Debug project externalConsole",
-    request = "launch",
-    program = "${workspaceFolder}/cmd/main.go",
-    console = "externalConsole",
     justMyCode = false,
   },
   { type = "go", name = "Debug", request = "launch", program = "${file}" },

@@ -2,6 +2,7 @@
 
 This repository contains configuration my personal dotfiles. It includes:
 - **Nvim(NvChad)**: `nvim/`
+- **Zsh**: `zsh/`
 - **Allacritty**: `alacritty.toml`
 - **Tmux**: `.tmux.conf`
 

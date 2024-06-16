@@ -153,6 +153,7 @@ M.hlslens = {
 M.common = {
 
   n = {
+    ["qq"] = { "<cmd>:q<CR>", "fast exit" },
     ["<leader>gg"] = { "<cmd>LazyGit<CR>", "LazyGit" },
     ["<leader>gb"] = { "<cmd>ToggleBlame window<CR>", "Git blame (window)" },
     ["<leader>gm"] = { "<cmd>GitMessenger<CR>", "Git messenger" },
@@ -183,6 +184,12 @@ M.common = {
         require("ufo").closeAllFolds()
       end,
       desc = "Close all folds",
+    },
+    ["grf"] = {
+      function()
+        vim.lsp.buf.references()
+      end,
+      "LSP references",
     },
 
     -- DB explorer

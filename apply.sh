@@ -28,7 +28,7 @@ if [ -d "$HOME/.config/nvim/lua/custom" ]; then
 	cp -r ./nvim/ "$HOME/.config/nvim/lua/custom/" || display_error_and_exit "❌ Failed to copy nvim config."
 	echo "✅ Nvim patch applied"
 else
-	display_error_and_exit "⚠️ Error: ~/.config/nvim directory not found."
+	display_error_and_exit "⚠️ Error: ~/.config/nvim/lua/custom directory not found."
 fi
 
 # 2. Tmux
@@ -64,15 +64,18 @@ fi
 # 4. Zsh
 if [ -d "./zsh" ]; then
 	if [ $WITH_BACKUP == true ]; then
-		mv "$HOME/.config/zsh/.zshrc" "$HOME/.config/zsh/.zshrc__backup" || display_error_and_exit "Failed to create backup for zshrc/.zshrc"
+		mv "$HOME/.config/zsh/.zshrc"   "$HOME/.config/zsh/.zshrc__backup"   || display_error_and_exit "Failed to create backup for zshrc/.zshrc"
 		mv "$HOME/.config/zsh/.aliases" "$HOME/.config/zsh/.aliases__backup" || display_error_and_exit "Failed to create backup for zshrc/.aliases"
+		mv "$HOME/.zshenv"              "$HOME/.zshenv__backup"              || display_error_and_exit "Failed to create backup for ~/.zshenv"
 		echo "Zsh config backed up to $HOME/.config/zsh"
   else
     rm -rf "$HOME/.config/zsh/.zshrc"
     rm -rf "$HOME/.config/zsh/.aliases"
+    rm -rf "$HOME/.zshenv"
 	fi
 
-	cp -r "./zsh" "$HOME/.config/zsh" || display_error_and_exit "Failed to copy zsh config."
+	cp -r "./zsh"     "$HOME/.config" || display_error_and_exit "Failed to copy zsh config."
+	cp -r "./.zshenv" "$HOME/.zshenv" || display_error_and_exit "Failed to copy zsh config."
 	echo "✅ Zsh config applied."
 else
 	display_error_and_exit " ./zsh not found."

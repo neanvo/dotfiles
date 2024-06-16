@@ -45,9 +45,13 @@ if [ -d "$HOME/.config/zsh" ]; then
     if [ -f "./zsh/.aliases" ]; then
         rm -rf ./zsh/.aliases
     fi
+    if [ -f "./.zshenv" ]; then
+        rm -rf ./.zshenv
+    fi
 
-    cp "$HOME/.config/zsh/.zshrc" "./zsh/.zshrc" || display_error_and_exit "❌ Failed to copy zsh configuration."
+    cp "$HOME/.config/zsh/.zshrc"   "./zsh/.zshrc"   || display_error_and_exit "❌ Failed to copy zsh configuration."
     cp "$HOME/.config/zsh/.aliases" "./zsh/.aliases" || display_error_and_exit "❌ Failed to copy zsh configuration."
+    cp "$HOME/.zshenv"              "./.zshenv"      || display_error_and_exit "❌ Failed to copy zsh configuration."
     echo "✅ Zsh"
 else
     echo "⚠️ Error: ~/.config/zsh not found. Zsh configuration was not synced."
