@@ -176,3 +176,13 @@ export NVM_DIR="$HOME/.nvm"
 if [ $(command -v "fzf") ]; then
     source $DOTFILES/zsh/fzf.zsh
 fi
+
+# +-----+
+# | WSL |
+# +-----+
+
+# Check if running in WSL
+if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null; then
+  export DISPLAY=$(grep -oP "(?<=nameserver ).+" /etc/resolv.conf):0.0
+  export LIBGL_ALWAYS_INDIRECT=1
+fi

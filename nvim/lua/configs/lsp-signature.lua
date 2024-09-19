@@ -1,6 +1,6 @@
 local M = {
     bind = true,
-    use_lspsaga = false,
+    use_lspsaga = true,
     floating_window = true,
     fix_pos = true,
     hint_enable = true,

@@ -16,10 +16,6 @@ M.config = function()
     -- {on_open} `(function)` Function called when a new window is opened, use for changing win settings/config
     -- {on_close} `(function)` Function called when a window is closed
   }
-  vim.keymap.set("n", "<ESC>", function()
-    require("notify").dismiss()
-    vim.cmd.nohl()
-  end, {})
   notify.setup(opts)
 end
 

@@ -1,5 +1,5 @@
 return function()
-  local icons = { dap = require("custom.configs.utils").icons.dap }
+  local icons = { dap = require("configs.utils").icons.dap }
 
   local dap = require "dap"
   local dapui = require "dapui"
@@ -14,7 +14,7 @@ return function()
     dapui.close()
   end
 
-  -- We need to override nvim-dap's default highlight groups, AFTER requiring nvim-dap for catppuccin.
+  -- We need to override nvim-dap's default highlight groups, AFTER requiring nvim-dap.
   -- vim.api.nvim_set_hl(0, "DapStopped", { fg = colors.green })
 
   vim.fn.sign_define(
@@ -33,10 +33,6 @@ return function()
   vim.fn.sign_define("DapLogPoint", { text = icons.dap.LogPoint, texthl = "DapLogPoint", linehl = "", numhl = "" })
 
   -- Config lang adaptors
-  require "custom.configs.dap.dap-lldb"
-  require "custom.configs.dap.dap-dlv"
-  -- DO NOT Load launch.json files
-  -- local vscode = require("dap.ext.vscode")
-  -- vscode.load_launchjs("launch.json")
-  -- vscode.load_launchjs(".vscode/launch.json")
+  require "configs.dap.dap-lldb"
+  require "configs.dap.dap-dlv"
 end

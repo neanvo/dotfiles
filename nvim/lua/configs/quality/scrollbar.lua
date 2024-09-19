@@ -1,4 +1,5 @@
--- local colors = require("tokyonight.colors").setup()
+local theme = require("configs.theme").theme
+
 return {
   show_in_active_only = false,
   max_lines = false,
@@ -57,39 +58,38 @@ return {
   marks = {
     Search = {
       text = { "─", "═" },
-      color = "#C9A554", -- TODO: colors
+      color = theme.yellow,
     },
     Error = {
       text = { "─", "═" },
-      -- color = "#R9A554", -- TODO: colors
     },
     Warn = {
       text = { "─", "═" },
-      color = "#B36D43", -- TODO: colors
+      color = theme.orange,
     },
     Info = {
       text = { "─", "═" },
-      color = "#5f875f", -- TODO: colors
+      color = theme.green,
     },
     Hint = {
       text = { "─", "═" },
-      color = "#5f875f", -- TODO: colors
+      color = theme.green,
     },
     Misc = {
       text = { "─", "═" },
-      color = "#bb7744", -- TODO: colors
+      color = theme.orange,
     },
     GitAdd = {
       text = "▕",
-      color = "#5f875f", -- TODO: colors
+      color = theme.green,
     },
     GitChange = {
       text = "▕",
-      color = "#C9A554", -- TODO: colors
+      color = theme.blue,
     },
     GitDelete = {
       text = "▁",
-      -- color = "#R9A554", -- TODO: colors
+      color = theme.red,
     },
   },
 }

@@ -8,24 +8,24 @@ if [[ "$CONF" == "yes" || "$CONF" == "y" ]]; then
     WITH_BACKUP=true
 fi
 
-# 1. Nvim (NvChad)
+# 1. Nvim
 # Check if Nvim is installed
 if ! command -v nvim &>/dev/null; then
 	display_error_and_exit "Nvim is not installed. Please install Nvim first."
 fi
 
-if [ -d "$HOME/.config/nvim/lua/custom" ]; then
+if [ -d "$HOME/.config/nvim" ]; then
   if [ $WITH_BACKUP == true ]; then
     TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-    BACKUP_DIR="$HOME/.config/nvim__custom_backup_${TIMESTAMP}"
+    BACKUP_DIR="$HOME/.config/nvim__backup_${TIMESTAMP}"
 
-    mv "$HOME/.config/nvim/lua/custom" "$BACKUP_DIR" || display_error_and_exit "❌ Failed to create backup for nvim."
+    mv "$HOME/.config/nvim" "$BACKUP_DIR" || display_error_and_exit "❌ Failed to create backup for nvim."
     echo "Nvim config backed up to $BACKUP_DIR"
   else
-    rm -rf "$HOME/.config/nvim/lua/custom" 
+    rm -rf "$HOME/.config/nvim" 
   fi
 
-	cp -r ./nvim/ "$HOME/.config/nvim/lua/custom/" || display_error_and_exit "❌ Failed to copy nvim config."
+	cp -r ./nvim/ "$HOME/.config/nvim/" || display_error_and_exit "❌ Failed to copy nvim config."
 	echo "✅ Nvim patch applied"
 else
 	display_error_and_exit "⚠️ Error: ~/.config/nvim/lua/custom directory not found."

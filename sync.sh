@@ -1,19 +1,19 @@
 #!/bin/bash
 source ./console.sh
 
-# 1. Nvim (NvChad) ✨
+# 1. Nvim
 if [ -d "$HOME/.config/nvim" ]; then
     if [ -d "./nvim" ]; then
         rm -rf ./nvim/
     fi
 
-    cp -r "$HOME/.config/nvim/lua/custom/" ./nvim/ || display_error_and_exit "❌ Failed to copy nvim configuration."
+    cp -r "$HOME/.config/nvim/" ./nvim/ || display_error_and_exit "❌ Failed to copy nvim configuration."
     echo "✅ Nvim"
 else
     echo "⚠️ Error: ~/.config/nvim/ directory not found. Nvim sync task is reverted."
 fi
 
-# 2. Tmux 📜
+# 2. Tmux
 if [ -f "$HOME/.tmux.conf" ]; then
     if [ -f "./.tmux.conf" ]; then
         rm -rf ./.tmux.conf
@@ -25,7 +25,7 @@ else
     echo "⚠️ Error: ~/.tmux.conf not found. Tmux configuration was not synced."
 fi
 
-# 3. Alacritty 💻
+# 3. Alacritty
 if [ -d "$HOME/.config/alacritty" ]; then
     if [ -f "./alacritty.toml" ]; then
         rm -rf ./alacritty.toml
@@ -37,7 +37,7 @@ else
     echo "⚠️ Error: ~/.config/alacritty not found. Alacritty configuration was not synced."
 fi
 
-# 4. Zsh 🐚
+# 4. Zsh
 if [ -d "$HOME/.config/zsh" ]; then
     if [ -f "./zsh/.zshrc" ]; then
         rm -rf ./zsh/.zshrc
