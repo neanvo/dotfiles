@@ -43,7 +43,12 @@ M.sources = {
 	-- actions.gomodifytags,
 	-- actions.impl,
 	lint.golangci_lint,
-	lint.revive,
+	lint.revive.with({
+		condition = function(utils)
+			return utils.root_has_file({ "revive.toml" })
+		end,
+		args = { "-config", "revive.toml", "-formatter", "json", "./..." },
+	}),
 
 	-- Python
 	lint.mypy,

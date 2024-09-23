@@ -57,6 +57,7 @@ local M = {
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+			"nvim-telescope/telescope-media-files.nvim",
 		},
 		cmd = "Telescope",
 		opts = function()
@@ -527,6 +528,27 @@ local M = {
 		dependencies = "JoosepAlviste/palenightfall.nvim",
 		config = function()
 			require("configs.quality.indent").setup()
+		end,
+	},
+
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		config = function()
+			require("render-markdown").setup({
+				file_types = { "markdown", "vimwiki" },
+			})
+		end,
+	},
+
+	{
+		"renerocksai/telekasten.nvim",
+		dependencies = {
+			"MeanderingProgrammer/render-markdown.nvim",
+			"renerocksai/calendar-vim",
+		},
+		cmd = { "Telekasten" },
+		config = function()
+			require("configs.telekasten")
 		end,
 	},
 

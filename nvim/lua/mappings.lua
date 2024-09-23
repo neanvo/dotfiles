@@ -14,6 +14,7 @@ M = {
 		["<C-b>"] = { "<C-o>b", "Move backward by word" },
 		["<C-w>"] = { "<C-o>w", "Move forward to the beginning of the next word" },
 		["<C-e>"] = { "<C-o>e", "Move forward to the end of the word" },
+		["[["] = { "<cmd>Telekasten insert_link<CR>", "Insert link" },
 	},
 	t = {
 		["<C-h>"] = { "<C-w>h", "window left" },
@@ -261,7 +262,6 @@ M = {
 		["<leader>cm"] = { "<cmd> Telescope git_commits <CR>", "Git commits" },
 		["<leader>gt"] = { "<cmd> Telescope git_status <CR>", "Git status" },
 		["<leader>pt"] = { "<cmd> Telescope terms <CR>", "Pick hidden term" },
-		["<leader>th"] = { "<cmd> Telescope themes <CR>", "Nvchad themes" },
 		["<leader>ma"] = { "<cmd> Telescope marks <CR>", "telescope bookmarks" },
 		-- Git
 		["]c"] = {
@@ -372,6 +372,21 @@ M = {
 
 		["<leader>or"] = { "<cmd>OverseerRun<cr>", "Overseer run task" },
 		["<leader>ot"] = { "<cmd>OverseerToggle<cr>", "Overseer toggle task window" },
+
+		["<leader>nn"] = { "<cmd>lua require('telekasten').new_note()<cr>", "New note" },
+		["<leader>nN"] = { "<cmd>lua require('telekasten').new_templated_note()<cr>", "New templated note" },
+		["<leader>nfa"] = { "<cmd>lua require('telekasten').find_notes()<cr>", "Find notes" },
+		["<leader>nfw"] = { "<cmd>lua require('telekasten').search_notes()<cr>", "Search notes" },
+		["<leader>no"] = { "<cmd>lua require('telekasten').panel()<cr>", "Open Telekasten panel" },
+		["<leader>nt"] = { "<cmd>lua require('telekasten').show_tags()<cr>", "Show tags" },
+		["<leader>nd"] = { "<cmd>lua require('telekasten').find_daily_notes()<cr>", "Find daily notes" },
+		["<leader>nb"] = { "<cmd>lua require('telekasten').show_backlinks()<cr>", "Show backlinks" },
+		["<leader>nl"] = { "<cmd>lua require('telekasten').find_friends()<cr>", "Find related notes" },
+		["<leader>nm"] = { "<cmd>lua require('telekasten').browse_media()<cr>", "Browse media" },
+		["<leader>nc"] = { "<cmd>Telekasten show_calendar<CR>", "Show calendar" },
+		["<leader>nD"] = { "<cmd>Telekasten goto_today<CR>", "Go to today's note" },
+		["<leader>np"] = { "<cmd>Telekasten insert_img_link<CR>", "Insert image link" },
+		["<leader>ngd"] = { "<cmd>Telekasten follow_link<CR>", "Follow link" },
 	},
 
 	v = {

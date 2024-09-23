@@ -35,11 +35,14 @@ local theme = {
 	pink = "#ff5370", -- base16
 	line = "#3f4354", -- for lines like vertsplit
 	green = "#c3e88d", --base16
+	dirty_green = "#5a6748",
 	vibrant_green = "#96e88d", -- custom
 	bg_green = "#203d2f",
 	nord_blue = "#8fb7ff",
 	blue = "#82aaff", -- base16
+	dirty_blue = "#313f5c",
 	yellow = "#ffcb6b", -- base16
+	dirty_yellow = "#695c44",
 	sun = "#ffd373",
 	purple = "#c792ea", -- base16
 	dark_purple = "#b383d2", --custom
@@ -47,6 +50,7 @@ local theme = {
 	teal = "#89ffe6", -- custom
 	orange = "#ffa282", -- base16
 	cyan = "#89ddff", -- base16
+	dirty_cyan = "#37505a",
 	statusline_bg = "#2d3142",
 	lightbg = "#3c4051",
 	pmenu_bg = "#82aaff", -- custom
@@ -60,7 +64,7 @@ M.setup = function()
 		color_overrides = {
 			background = theme.black,
 			foreground = theme.white,
-			diff_add_background = theme.bg_green,
+			diff_add_background = theme.dirty_green,
 			purple = theme.purple,
 			orange = theme.orange,
 		},
@@ -526,6 +530,11 @@ M.setup = function()
 			RainbowDelimiterGreen = { fg = theme.green },
 			RainbowDelimiterViolet = { fg = theme.purple },
 			RainbowDelimiterCyan = { fg = theme.cyan },
+
+			RenderMarkdownH1Bg = { fg = theme.blue, bg = theme.dirty_blue, bold = true },
+			RenderMarkdownH2Bg = { fg = theme.yellow, bg = theme.dirty_yellow, bold = true },
+			RenderMarkdownH3Bg = { fg = theme.green, bg = theme.dirty_green, bold = true },
+			RenderMarkdownH4Bg = { fg = theme.cyan, bg = theme.dirty_cyan, bold = true },
 
 			TelescopePromptPrefix = { fg = theme.red, bg = theme.black },
 			TelescopeSelection = { bg = theme.black2, fg = theme.white },
