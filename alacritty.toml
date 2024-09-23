@@ -14,7 +14,7 @@ dynamic_title = true
 
 [scrolling]
 history = 10000
-multiplier = 0
+multiplier = 3
 
 [font.normal]
 family = "FiraCode Nerd Font"
@@ -78,14 +78,14 @@ hide_when_typing = false
 action = "PasteSelection"
 mouse = "Middle"
 
-[mouse.double_click]
-threshold = 300
+# [mouse.double_click]
+# threshold = 300
 
-[mouse.hints]
-modifiers = "None"
+# [mouse.hints]
+# modifiers = "None"
 
-[mouse.triple_click]
-threshold = 300
+# [mouse.triple_click]
+# threshold = 300
 
 [[keyboard.bindings]]
 key = "Paste"
