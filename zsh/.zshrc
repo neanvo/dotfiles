@@ -1,6 +1,9 @@
 # OMZ path
 export ZSH=$HOME/.oh-my-zsh
 
+if [ -z "$TMUX" ]; then
+  exec tmux new-session -A -s workspace
+fi
 # Theme
 ZSH_THEME="gruvbox"
 SOLARIZED_THEME="dark"
@@ -171,13 +174,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # +-----+
-# | FZF |
-# +-----+
-if [ $(command -v "fzf") ]; then
-    source $DOTFILES/zsh/fzf.zsh
-fi
-
-# +-----+
 # | WSL |
 # +-----+
 
@@ -186,3 +182,10 @@ if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null; then
   export DISPLAY=$(grep -oP "(?<=nameserver ).+" /etc/resolv.conf):0.0
   export LIBGL_ALWAYS_INDIRECT=1
 fi
+
+tmux_sessionizer() {
+    ~/.config/tmux/tmux-sessionizer
+}
+
+zle -N tmux_sessionizer
+bindkey '^F' tmux_sessionizer

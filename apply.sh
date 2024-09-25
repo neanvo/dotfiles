@@ -41,6 +41,7 @@ if [ -f "./.tmux.conf" ]; then
 	fi
 
 	cp "./.tmux.conf" "$HOME/.tmux.conf" || display_error_and_exit "Failed to copy tmux config."
+	cp "./tmux-sessionizer" "$HOME/.config/tmux/tmux-sessionizer" || display_error_and_exit "Failed to copy tmux sessionizer."
 	echo "✅ Tmux config applied."
 else
 	display_error_and_exit " ~/.tmux.conf not found."
