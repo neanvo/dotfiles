@@ -535,7 +535,7 @@ local M = {
 		"MeanderingProgrammer/render-markdown.nvim",
 		config = function()
 			require("render-markdown").setup({
-				file_types = { "markdown", "vimwiki" },
+				file_types = { "markdown", "vimwiki", "telekasten" },
 			})
 		end,
 	},
@@ -543,7 +543,6 @@ local M = {
 	{
 		"renerocksai/telekasten.nvim",
 		dependencies = {
-			"MeanderingProgrammer/render-markdown.nvim",
 			"renerocksai/calendar-vim",
 		},
 		cmd = { "Telekasten" },
