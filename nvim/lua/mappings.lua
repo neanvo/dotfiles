@@ -31,7 +31,7 @@ M = {
 			end,
 			"Esc actions",
 		},
-		["<C-u>"] = { "<C-i>", "remap" },
+		["<C-p>"] = { "<C-i>", "remap" },
 		-- switch between windows
 		["<C-h>"] = { "<C-w>h", "Window left" },
 		["<C-l>"] = { "<C-w>l", "Window right" },

@@ -1,3 +1,5 @@
+local misc = require("misc")
+
 local M = {
 	"nvim-lua/plenary.nvim",
 
@@ -386,6 +388,7 @@ local M = {
 	},
 
 	{
+		enabled = not misc.is_wsl(),
 		"rcarriga/nvim-notify",
 		config = function()
 			vim.notify = require("notify")
@@ -394,12 +397,14 @@ local M = {
 	},
 
 	{
+		enabled = not misc.is_wsl(),
 		"folke/noice.nvim",
 		event = "VeryLazy",
 		dependencies = {
 			"MunifTanjim/nui.nvim",
 			"rcarriga/nvim-notify",
 		},
+
 		config = function()
 			require("configs.noice").config()
 		end,
