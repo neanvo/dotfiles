@@ -1,3 +1,4 @@
+local misc = require("misc")
 local M = {}
 
 M = {
@@ -26,7 +27,9 @@ M = {
 	n = {
 		["<Esc>"] = {
 			function()
-				require("notify").dismiss()
+				if not misc.is_wsl() then
+					require("notify").dismiss()
+				end
 				vim.cmd.nohl()
 			end,
 			"Esc actions",
