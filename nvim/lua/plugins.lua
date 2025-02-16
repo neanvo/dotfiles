@@ -556,6 +556,21 @@ local M = {
 		end,
 	},
 
+	{
+		"neanvo/buben.nvim",
+		dependencies = {
+			"nvim-telescope/telescope.nvim",
+		},
+		config = function()
+			require("buben").setup({
+				popup = {
+					width = 60,
+				},
+				use_default_highlights = false,
+			})
+		end,
+	},
+
 	-- Only load whichkey after all the gui
 	{
 		"folke/which-key.nvim",

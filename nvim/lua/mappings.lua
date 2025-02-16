@@ -391,6 +391,10 @@ M = {
 		["<leader>nD"] = { "<cmd>Telekasten goto_today<CR>", "Go to today's note" },
 		["<leader>np"] = { "<cmd>Telekasten insert_img_link<CR>", "Insert image link" },
 		["<leader>ngd"] = { "<cmd>Telekasten follow_link<CR>", "Follow link" },
+
+		["<leader>ba"] = { "<cmd>BubenAdd<CR>", "Add blockchain address" },
+		["<leader>bt"] = { "<cmd>BubenToggle<CR>", "Toggle address visibility" },
+		["<leader>bl"] = { "<cmd>BubenLookup<CR>", "List addresses" },
 	},
 
 	v = {

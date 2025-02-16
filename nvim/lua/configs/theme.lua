@@ -647,6 +647,11 @@ M.setup = function()
 			DapUIUnavailable = { fg = theme.grey_fg },
 			DapUIUnavailableNC = { fg = theme.grey_fg },
 
+			BubenName = { fg = theme.green, bg = theme.lightbg },
+			BubenChain = { fg = theme.blue, bg = theme.lightbg },
+			BubenSeparator = { fg = theme.base05, bg = theme.lightbg },
+			BubenTitle = { fg = theme.blue, bg = theme.lightbg },
+
 			WhichKey = { fg = theme.blue },
 			WhichKeySeparator = { fg = theme.light_grey },
 			WhichKeyDesc = { fg = theme.red },
