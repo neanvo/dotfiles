@@ -1,9 +1,10 @@
 # OMZ path
 export ZSH=$HOME/.oh-my-zsh
 
-if [ -z "$TMUX" ]; then
-  exec tmux new-session -A -s workspace
-fi
+# if [ -z "$TMUX" ]; then
+#   exec tmux new-session -A -s workspace
+# fi
+
 # Theme
 ZSH_THEME="gruvbox"
 SOLARIZED_THEME="dark"
@@ -192,3 +193,9 @@ bindkey '^F' tmux_sessionizer
 
 export PATH="/opt/cuda/bin:$PATH"
 export LD_LIBRARY_PATH="/opt/cuda/lib64:$LD_LIBRARY_PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/neanvo/Workspace/aurora/solver-private-liquidity-cex-v2/google-cloud-sdk/path.zsh.inc' ]; then . '/home/neanvo/Workspace/aurora/solver-private-liquidity-cex-v2/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/neanvo/Workspace/aurora/solver-private-liquidity-cex-v2/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/neanvo/Workspace/aurora/solver-private-liquidity-cex-v2/google-cloud-sdk/completion.zsh.inc'; fi

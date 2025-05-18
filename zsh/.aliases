@@ -62,9 +62,10 @@ alias paccc='sudo pacman -Scc'            # empty the whole cache
 # | tmux |
 # +------+
 
-alias tmuxk='tmux kill-session -t'
-alias tmuxa='tmux attach -t'
-alias tmuxl='tmux list-sessions'
+alias tmx='tmux kill-session -t'
+alias tma='tmux attach -t'
+alias tmls='tmux list-sessions'
+alias tmn='exec tmux new-session -A -s workspace'
 
 # +-----+
 # | Git |

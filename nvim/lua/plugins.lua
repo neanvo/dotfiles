@@ -168,7 +168,103 @@ local M = {
 					require("telescope").load_extension("dap")
 				end,
 			},
+			{
+				"microsoft/vscode-js-debug",
+				build = "npm install --legacy-peer-deps --no-save && npx gulp vsDebugServerBundle && rm -rf out && mv dist out",
+				version = "1.*",
+			},
+			{
+				"mxsdev/nvim-dap-vscode-js",
+				config = function()
+					require("dap-vscode-js").setup({
+						debugger_path = vim.fn.resolve(vim.fn.stdpath("data") .. "/lazy/vscode-js-debug"),
+						adapters = { "pwa-node", "chrome", "pwa-chrome" },
+					})
+				end,
+			},
 			{ "nvim-neotest/nvim-nio" },
+			{
+				"jay-babu/mason-nvim-dap.nvim",
+				opts = {
+					handlers = {
+						js = function()
+							local dap = require("dap")
+							dap.adapters["pwa-node"] = {
+								type = "server",
+								port = "${port}",
+								executable = { command = vim.fn.exepath("js-debug-adapter"), args = { "${port}" } },
+							}
+							require("dap.ext.vscode").type_to_filetypes["pwa-node"] =
+								{ "javascript", "javascriptreact", "typescript", "typescriptreact" }
+
+							local pwa_node_attach = {
+								type = "pwa-node",
+								request = "launch",
+								name = "js-debug: Attach to Process (pwa-node)",
+								processId = require("dap.utils").pick_process,
+								cwd = "${workspaceFolder}",
+							}
+							local function deno(cmd)
+								cmd = cmd or "run"
+								return {
+									request = "launch",
+									name = ("js-debug: Launch Current File (deno %s)"):format(cmd),
+									type = "pwa-node",
+									program = "${file}",
+									cwd = "${workspaceFolder}",
+									runtimeExecutable = vim.fn.exepath("deno"),
+									runtimeArgs = { cmd, "--inspect-brk" },
+									attachSimplePort = 9229,
+								}
+							end
+							local function typescript(args)
+								return {
+									type = "pwa-node",
+									request = "launch",
+									name = ("js-debug: Launch Current File (ts-node%s)"):format(
+										args and (" " .. table.concat(args, " ")) or ""
+									),
+									program = "${file}",
+									cwd = "${workspaceFolder}",
+									runtimeExecutable = "ts-node",
+									runtimeArgs = args,
+									sourceMaps = true,
+									protocol = "inspector",
+									console = "integratedTerminal",
+									resolveSourceMapLocations = {
+										"${workspaceFolder}/dist/**/*.js",
+										"${workspaceFolder}/**",
+										"!**/node_modules/**",
+									},
+								}
+							end
+							for _, language in ipairs({ "javascript", "javascriptreact" }) do
+								dap.configurations[language] = {
+									{
+										type = "pwa-node",
+										request = "launch",
+										name = "js-debug: Launch File (pwa-node)",
+										program = "${file}",
+										cwd = "${workspaceFolder}",
+									},
+									deno("run"),
+									deno("test"),
+									pwa_node_attach,
+								}
+							end
+							for _, language in ipairs({ "typescript", "typescriptreact" }) do
+								dap.configurations[language] = {
+									typescript(),
+									typescript({ "--esm" }),
+									deno("run"),
+									deno("test"),
+									pwa_node_attach,
+								}
+							end
+						end,
+					},
+				},
+			},
 		},
 	},
 
@@ -540,9 +636,10 @@ local M = {
 		"MeanderingProgrammer/render-markdown.nvim",
 		config = function()
 			require("render-markdown").setup({
-				file_types = { "markdown", "vimwiki", "telekasten" },
+				file_types = { "markdown", "vimwiki", "telekasten", "Avante" },
 			})
 		end,
+		ft = { "markdown", "Avante" },
 	},
 
 	{
@@ -569,6 +666,178 @@ local M = {
 				use_default_highlights = false,
 			})
 		end,
+	},
+	{
+		"ravitemer/mcphub.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim", -- Required for Job and HTTP requests
+		},
+		build = "npm install -g mcp-hub@latest", -- Installs required mcp-hub npm module
+		config = function()
+			require("mcphub").setup({
+				config = vim.fn.expand("~/.config/mcp.json"),
+				auto_approve = true,
+				extensions = {
+					avante = {
+						make_slash_commands = true, -- make /slash commands from MCP server prompts
+					},
+					codecompanion = {
+						-- Show the mcp tool result in the chat buffer
+						-- NOTE:if the result is markdown with headers, content after the headers wont be sent by codecompanion
+						show_result_in_chat = false,
+						make_vars = true, -- make chat #variables from MCP server resources
+						make_slash_commands = true, -- make /slash commands from MCP server prompts
+					},
+				},
+			})
+		end,
+	},
+
+	-- TODO: add reasoning and the other (https://github.com/yetone/cosmos-nvim/blob/596bc7b620400f9d23041a9568cd8d74c636fc68/lua/layers/completion/plugins.lua#L202C17-L202C31)
+	{
+		"yetone/avante.nvim",
+		event = "VeryLazy",
+		version = false, -- Never set this value to "*"! Never!
+		opts = {
+			-- auto_suggestions_provider = "claude",
+			-- cursor_applying_provider = "claude", -- I'm using Claude Text Editor Tool Mode
+			provider = "claude",
+			disabled_tools = { "git_commit", "git_diff" },
+			claude = {
+				endpoint = "https://api.anthropic.com",
+				model = "claude-3-7-sonnet-20250219",
+				timeout = 30000, -- Timeout in milliseconds
+				-- temperature = 0,
+				max_tokens = 20480,
+				temperature = 1,
+				thinking = {
+					type = "enabled",
+					budget_tokens = 2000,
+				},
+				disable_tools = { "python" },
+			},
+			vendors = {
+				["claude-sonnet35"] = {
+					__inherited_from = "claude",
+					model = "claude-3-5-sonnet-20241022",
+					timeout = 30000, -- Timeout in milliseconds
+					temperature = 0,
+					max_tokens = 8192,
+				},
+				["claude-sonnet37"] = {
+					__inherited_from = "claude",
+					model = "claude-3-7-sonnet-20250219",
+					timeout = 30000, -- Timeout in milliseconds
+					temperature = 0,
+					max_tokens = 20480,
+				},
+				["groq"] = { -- define groq provider
+					__inherited_from = "openai",
+					api_key_name = "GROQ_API_KEY",
+					endpoint = "https://api.groq.com/openai/v1/",
+					model = "llama-3.3-70b-versatile",
+					max_completion_tokens = 32768, -- remember to increase this value, otherwise it will stop generating halfway
+				},
+			},
+			--
+			behaviour = {
+				auto_suggestions = false, -- Experimental stage
+				auto_apply_diff_after_generation = true,
+				auto_set_keymaps = true,
+				auto_set_highlight_group = true,
+				jump_result_buffer_on_finish = true,
+				use_cwd_as_project_root = true,
+				minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
+				enable_token_counting = true, -- Whether to enable token counting. Default to true.
+				-- NOTE: works bad
+				-- enable_cursor_planning_mode = false, -- Whether to enable Cursor Planning Mode. Default to false.
+				-- enable_claude_text_editor_tool_mode = true, -- Whether to enable Claude Text Editor Tool Mode.
+				--
+				-- 		support_paste_from_clipboard = false,
+			},
+			windows = {
+				position = "smart",
+				height = 46,
+				wrap = true,
+				sidebar_header = {
+					align = "center",
+				},
+				ask = {
+					floating = false,
+				},
+			},
+			web_search_engine = {
+				provider = "brave", -- or "serpapi"
+			},
+			system_prompt = function()
+				local system_prompt = [[
+Follow these steps for each interaction:
+
+1. User Identification:
+   - You should assume that you are interacting with default_user
+   - If you have not identified default_user, proactively try to do so.
+
+2. Memory Retrieval:
+   - Always begin your chat by saying only "Remembering..." and retrieve all relevant information from your knowledge graph
+   - Always refer to your knowledge graph as your "memory"
+
+3. Memory
+   - While conversing with the user, be attentive to any new information that falls into these categories:
+     a) Basic Identity (age, gender, location, job title, education level, etc.)
+     b) Behaviors (interests, habits, etc.)
+     c) Preferences (communication style, preferred language, etc.)
+     d) Goals (goals, targets, aspirations, etc.)
+     e) Relationships (personal and professional relationships up to 3 degrees of separation)
+
+4. Memory Update:
+   - If any new information was gathered during the interaction, update your memory as follows:
+     a) Create entities for recurring organizations, people, and significant events
+     b) Connect them to the current entities using relations
+     b) Store facts about them as observations
+        ]]
+				local hub = require("mcphub").get_hub_instance()
+				return system_prompt .. "\n\n" .. hub:get_active_servers_prompt()
+			end,
+			custom_tools = function()
+				return {
+					require("mcphub.extensions.avante").mcp_tool(),
+				}
+			end,
+		},
+		-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+		build = "make",
+		-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"stevearc/dressing.nvim",
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			--- The below dependencies are optional,
+			"echasnovski/mini.pick", -- for file_selector provider mini.pick
+			"nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+			"hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+			"ibhagwan/fzf-lua", -- for file_selector provider fzf
+			"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+			"zbirenbaum/copilot.lua", -- for providers='copilot'
+			{
+				-- support for image pasting
+				"HakonHarnes/img-clip.nvim",
+				event = "VeryLazy",
+				opts = {
+					-- recommended settings
+					default = {
+						embed_image_as_base64 = false,
+						prompt_for_file_name = false,
+						drag_and_drop = {
+							insert_mode = true,
+						},
+						-- required for Windows users
+						use_absolute_path = true,
+					},
+				},
+			},
+			"MeanderingProgrammer/render-markdown.nvim",
+		},
 	},
 
 	-- Only load whichkey after all the gui

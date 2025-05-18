@@ -22,14 +22,15 @@ return {
           { id = 'breakpoints', size = 0.1 },
           { id = "stacks", size = 0.1 },
           -- 'watches',
-          { id = "repl", size = 0.1 },
+          -- { id = "repl", size = 0.1 },
         },
         size = 45,
         position = "left",
       },
       {
         elements = {
-          "console",
+          -- "console",
+          { id = "repl" },
         },
         size = 30,
         position = "bottom",

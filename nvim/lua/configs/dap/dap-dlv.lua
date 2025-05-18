@@ -1,4 +1,5 @@
 local dap = require("dap")
+dap.set_log_level("TRACE")  -- Options: TRACE, DEBUG, INFO, WARN, ERROR
 
 dap.adapters.go = function(callback)
 	local stdout = vim.loop.new_pipe(false)
@@ -41,8 +42,24 @@ dap.configurations.go = {
 		type = "go",
 		name = "Debug project",
 		request = "launch",
-		program = "${workspaceFolder}/cmd/main.go",
+		program = "${workspaceFolder}/cmd/main/",
 		justMyCode = false,
+	},	
+  {
+		type = "go",
+		name = "Debug project (+ENVs)",
+		request = "launch",
+		program = "${workspaceFolder}/cmd/main/",
+		justMyCode = false,
+		env = function()
+			local input = vim.fn.input("Env var(s) (KEY=VAL ...): ")
+			local result = {}
+			for _, pair in ipairs(vim.fn.split(input, " ", true)) do
+				local key, val = string.match(pair, "([^=]+)=?(.*)")
+				if key then result[key] = val end
+			end
+			return result
+		end,
 	},
 	{ type = "go", name = "Debug", request = "launch", program = "${file}" },
 	{
@@ -69,4 +86,19 @@ dap.configurations.go = {
 		mode = "test",
 		program = "./${relativeFileDirname}",
 	},
+}
+
+dap.configurations.typescript = {
+  {
+    name = "Attach to NodeJS process",
+    type = "pwa-node",
+    request = "attach",
+    processId = require('dap.utils').pick_process,
+    cwd = vim.fn.getcwd(),
+    restart = false,
+    sourceMaps = true,
+    port = 9229,
+    -- protocol = "inspector",
+    -- skipFiles = { "<node_internals>/**", "node_modules/**" },
+  },
 }

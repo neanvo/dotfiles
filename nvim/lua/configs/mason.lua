@@ -56,6 +56,7 @@ local options = {
 		"yamllint",
 		"tfsec",
 		"trivy",
+    "codelldb"
 	},
 	PATH = "skip",
 

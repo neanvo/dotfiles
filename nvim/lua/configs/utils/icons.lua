@@ -173,7 +173,7 @@ local icons = {
 		Vim = "",
 	},
 	dap = {
-		Breakpoint = "󰝥",
+		Breakpoint = "🟥",
 		BreakpointCondition = "󰟃",
 		BreakpointRejected = "",
 		LogPoint = "",
@@ -184,7 +184,7 @@ local icons = {
 		StepInto = "󰆹",
 		StepOut = "󰆸",
 		StepOver = "󰆷",
-		Stopped = "",
+		Stopped = "▶️",
 		Terminate = "󰝤",
 	},
 }
